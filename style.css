@@ -1,0 +1,37 @@
+/*
+Theme Name: Hello Elementor Child
+Description: Child theme for the Hello Elementor
+Author: rahmat mondol
+Author URI: Your Website URL
+Template: hello-elementor
+Version: 1.0
+*/
+
+.image-vox {
+  border-radius: 30px 30px 30px 30px;
+  box-shadow: -5px 5px 6px -2px rgba(0, 0, 0, 0.33);
+}
+
+.elementor-45 .elementor-element.elementor-element-579c986 img, #header-alt-logo img{
+  width: 70px;
+  position: fixed;
+  animation: logo 1s ease-in-out 0s 1 normal both;
+  top: 10px;
+}
+
+#whatsapp-icon {
+  animation: logo 1s ease-in-out 0s 1 normal both;
+}
+
+@keyframes logo {
+  0% {
+    opacity: 0;
+    transform: translateY(-250px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

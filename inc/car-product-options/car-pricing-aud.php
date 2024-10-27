@@ -1,0 +1,80 @@
+<?php
+
+// Add car priching tab
+function add_car_pricing_aud_tab($tabs)
+{
+    $tabs['car_pricing_aud_tab'] = array(
+        'label'    => __('Car pricing Aud', 'car'),
+        'target'   => 'car_pricing_aud_tab',
+        'priority' => 21,
+        'class'    => array('show_if_car'),
+    );
+    return $tabs;
+}
+
+add_filter('woocommerce_product_data_tabs', 'add_car_pricing_aud_tab');
+
+
+// Add custom fields to the custom tab for car rental product type
+function car_pricing_aud_tab_content()
+{
+    global $post;
+
+    echo '<div id="car_pricing_aud_tab" class="panel woocommerce_options_panel">';
+
+    //per day
+    woocommerce_wp_text_input(
+        array(
+            'id'          => '_per_day_aud',
+            'label'       => __('Per Day (AUD)'),
+            'placeholder' => __('Per Day'),
+            'desc_tip'    => 'true',
+            'description' => __('Per Day'),
+            'value'       => get_post_meta($post->ID, '_per_day_aud', true),
+        )
+    );
+
+    //per week
+    woocommerce_wp_text_input(
+        array(
+            'id'          => '_per_week_aud',
+            'label'       => __('Per week (AUD)'),
+            'placeholder' => __('Per week'),
+            'desc_tip'    => 'true',
+            'description' => __('Per week'),
+            'value'       => get_post_meta($post->ID, '_per_week_aud', true),
+        )
+    );
+
+    //Insurance 
+    woocommerce_wp_text_input(
+        array(
+            'id'          => '_insurance_per_day_aud',
+            'label'       => __('Insurance Per Day (AUD)'),
+            'placeholder' => __('Insurance Per Day'),
+            'desc_tip'    => 'true',
+            'description' => __('Insurance Per Day'),
+            'value'       => get_post_meta($post->ID, '_insurance_per_day_aud', true),
+        )
+    );
+
+
+    echo '</div>';
+}
+
+add_action('woocommerce_product_data_panels', 'car_pricing_aud_tab_content');
+
+// Save custom fields when the product is saved for car rental product type
+function save_car_pricing_aud_tab_content($post_id)
+{
+    // Custom Field
+    $per_day       = sanitize_text_field($_POST['_per_day_aud']);
+    $per_week      = sanitize_text_field($_POST['_per_week_aud']);
+    $insurance     = sanitize_text_field($_POST['_insurance_per_day_aud']);
+
+    update_post_meta($post_id, '_per_day_aud', $per_day);
+    update_post_meta($post_id, '_per_week_aud', $per_week);
+    update_post_meta($post_id, '_insurance_per_day_aud', $insurance);
+}
+
+add_action('woocommerce_process_product_meta', 'save_car_pricing_aud_tab_content');
